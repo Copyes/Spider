@@ -1,0 +1,26 @@
+{
+  "name": "spider",
+  "version": "1.0.0",
+  "description": "Learning web crawler through nodejs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Copyes/Spider.git"
+  },
+  "keywords": [
+    "spider"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Copyes/Spider/issues"
+  },
+  "homepage": "https://github.com/Copyes/Spider#readme",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.2",
+    "request": "^2.83.0"
+  }
+}
