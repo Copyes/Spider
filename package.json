@@ -21,6 +21,9 @@
   "homepage": "https://github.com/Copyes/Spider#readme",
   "dependencies": {
     "cheerio": "^1.0.0-rc.2",
+    "crypto": "^1.0.1",
+    "iconv-lite": "^0.4.19",
+    "moment": "^2.19.3",
     "request": "^2.83.0"
   }
 }
