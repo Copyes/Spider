@@ -114,8 +114,8 @@ const saveStageData = (data, name) => {
 // 保存每个任务相关的数据
 const saveTaskData = data => {
   fs.writeFileSync(
-    path.join(__dirname, '../dist/stage.json'),
-    JSON.stringify(JSON.parse(data)),
+    path.join(__dirname, '../dist/wiki.json'),
+    JSON.stringify(data),
     {
       encoding: 'utf8'
     }
@@ -149,13 +149,51 @@ const getCourseTask = taskId => {
   })
 }
 ;(async () => {
+  // 获取所有年龄阶段的数据
   let ageStages = await getIndexCourses()
-  saveIndexData(ageStages)
   let indexData = JSON.parse(ageStages)
   let stageArr = indexData.data.age_stage
+  // 用于存储最后的数据
+  let result = []
+  // 简单的任务信息列表
+  let milestoneList = []
+  let taskList = []
   for (let i = 0; i < stageArr.length; ++i) {
-    sleep(1000)
+    console.log(`开始年龄阶段${stageArr[i].name}`)
+    // sleep(1000)
+    // 获取对应年龄阶段的课程
     let course = await getAgeStageCourses(stageArr[i].id)
-    saveStageData(course, stageArr[i].name)
+    course = JSON.parse(course)
+    // console.log(course.data.course)
+    let temp = course.data.course
+    // 收集课程里面所有的里程碑
+    if (temp && temp.length > 0) {
+      for (let j = 0; j < temp.length; ++j) {
+        milestoneList = milestoneList.concat(temp[j].milestone_list)
+      }
+    }
   }
+  // 收集所有的任务
+  for (let m = 0; m < milestoneList.length; ++m) {
+    taskList = taskList.concat(milestoneList[m].task_list)
+  }
+  //获取所有的任务内容
+  for (let n = 0; n < taskList.length; ++n) {
+    console.log(`开始了任务${n}`)
+    await sleep(1000)
+    let data = await getCourseTask(taskList[n].id)
+    data = JSON.parse(data)
+    // console.log(data)
+    let task_info = data.data.task_info
+    let obj = {
+      title: task_info.task_name,
+      type: task_info.ability.name,
+      age_stage: task_info.age_stage.name,
+      tag: '生活手册/亲子游戏',
+      content: task_info.task_info_arr[0].desc,
+      milestone: task_info.milestone.title
+    }
+    result.push(obj)
+  }
+  saveTaskData(result)
 })()
