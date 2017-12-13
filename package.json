@@ -24,6 +24,7 @@
     "crypto": "^1.0.1",
     "iconv-lite": "^0.4.19",
     "moment": "^2.19.3",
+    "puppeteer": "^0.13.0",
     "request": "^2.83.0"
   }
 }
